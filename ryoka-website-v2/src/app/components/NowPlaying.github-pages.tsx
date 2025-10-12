@@ -1,3 +1,7 @@
+// Альтернативна версія NowPlaying для GitHub Pages
+// Замініть вміст src/app/components/NowPlaying.tsx на цей код
+// якщо хочете використати пряме підключення до Last.fm API
+
 'use client'
 
 import { useEffect, useState } from 'react';
@@ -20,6 +24,10 @@ export default function NowPlaying() {
     const [currentImage, setCurrentImage] = useState('');
     const [error, setError] = useState(false);
 
+    // ⚠️ ВАЖЛИВО: Замініть на ваші дані
+    const LASTFM_API_KEY = 'YOUR_LASTFM_API_KEY'; // Отримайте на https://www.last.fm/api/account/create
+    const LASTFM_USERNAME = 'just-ryoka'; // Ваш Last.fm username
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -28,35 +36,64 @@ export default function NowPlaying() {
         if (!mounted) return;
 
         const fetchNowPlaying = async () => {
+            // Якщо немає API ключа - не показуємо компонент
+            if (!LASTFM_API_KEY || LASTFM_API_KEY === 'YOUR_LASTFM_API_KEY') {
+                return;
+            }
+
             try {
-                const res = await fetch('/api/lastfm', {
+                const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USERNAME}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
+
+                const res = await fetch(url, {
                     cache: 'no-store'
                 });
-                
+
                 if (!res.ok) {
-                    console.error('[NowPlaying] API response error:', res.status);
                     setError(true);
                     return;
                 }
-                
-                const data = await res.json();
-                console.log('[NowPlaying] Received data:', data);
 
-                if (data.isPlaying) {
-                    if (data.image && data.image !== currentImage) {
+                const data = await res.json();
+
+                if (data.error) {
+                    setError(true);
+                    return;
+                }
+
+                const trackData = data.recenttracks?.track?.[0];
+
+                if (!trackData) {
+                    setVisible(false);
+                    setTrack({ isPlaying: false });
+                    return;
+                }
+
+                const isPlaying = trackData['@attr']?.nowplaying === 'true';
+
+                if (isPlaying) {
+                    const image = trackData.image?.[3]?.['#text'] || trackData.image?.[2]?.['#text'];
+                    
+                    if (image && image !== currentImage) {
                         setImageLoaded(false);
-                        setCurrentImage(data.image);
+                        setCurrentImage(image);
                     }
 
-                    setTrack(data);
+                    setTrack({
+                        isPlaying: true,
+                        title: trackData.name,
+                        artist: trackData.artist['#text'] || trackData.artist,
+                        album: trackData.album['#text'],
+                        image,
+                        url: trackData.url,
+                    });
                     setError(false);
                     setTimeout(() => setVisible(true), 300);
                 } else {
                     setVisible(false);
-                    setTrack(data);
+                    setTrack({ isPlaying: false });
                 }
             } catch (error) {
-                console.error('[NowPlaying] Error fetching track:', error);
+                console.error('Error fetching track:', error);
                 setError(true);
             }
         };
@@ -65,7 +102,7 @@ export default function NowPlaying() {
         const interval = setInterval(fetchNowPlaying, 10000);
 
         return () => clearInterval(interval);
-    }, [mounted, currentImage]);
+    }, [mounted, currentImage, LASTFM_API_KEY, LASTFM_USERNAME]);
 
     if (!mounted || !track.isPlaying || error) {
         return null;
