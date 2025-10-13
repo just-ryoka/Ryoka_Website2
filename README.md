@@ -214,7 +214,6 @@ MIT License - дивіться [LICENSE.md](./LICENSE.md)
 
 ## 🔮 Майбутні плани
 
-- [ ] PWA підтримка
 - [ ] Dark/Light theme toggle
 - [ ] Blog section з MDX
 - [ ] Contact form
