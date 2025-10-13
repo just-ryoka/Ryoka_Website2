@@ -219,7 +219,6 @@ MIT License - дивіться [LICENSE.md](./LICENSE.md)
 - [ ] Contact form
 - [ ] Analytics integration
 - [ ] Particles.js background
-- [ ] Custom cursor
 
 ---
 
