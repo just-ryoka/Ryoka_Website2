@@ -25,8 +25,6 @@
 - **Styling:** TailwindCSS 4
 - **Icons:** React Icons
 - **Font:** Comfortaa (Google Fonts)
-- **Deployment:** GitHub Pages
-- **CI/CD:** GitHub Actions
 
 ---
 
