@@ -2,7 +2,6 @@
 
 > Сучасний персональний веб-сайт з відео-фоном, анімаціями та інтеграцією Last.fm
 
-[![Deploy to GitHub Pages](https://github.com/just-ryoka/Ryoka_Website2/actions/workflows/deploy.yml/badge.svg)](https://github.com/just-ryoka/Ryoka_Website2/actions/workflows/deploy.yml)
 
 ---
 
