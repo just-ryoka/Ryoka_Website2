@@ -199,7 +199,7 @@ MIT License - дивіться [LICENSE.md](./LICENSE.md)
 
 **Ryoka**
 - GitHub: [@just-ryoka](https://github.com/just-ryoka)
-- Discord: [Join Server](https://discord.gg/PRYn2ghB)
+- Discord: [justryoka](https://discord.gg/PRYn2ghB)
 - Telegram: [@justryoka](https://t.me/justryoka)
 - Spotify: [Profile](https://open.spotify.com/user/31gzi2mzyjewmqgn477vzyp3wtwy)
 
