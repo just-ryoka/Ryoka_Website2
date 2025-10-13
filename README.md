@@ -211,7 +211,7 @@ MIT License - дивіться [LICENSE.md](./LICENSE.md)
 - Tailwind CSS за utility-first підхід
 - React Icons за іконки
 - Last.fm за API
-- GitHub за безкоштовний хостинг
+
 
 ---
 
